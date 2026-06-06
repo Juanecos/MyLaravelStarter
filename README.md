@@ -51,7 +51,6 @@ rm -rf .git
 docker compose exec app /bin/bash
 
 # Dentro del contenedor:
-cd application
 composer run dev
 ```
 

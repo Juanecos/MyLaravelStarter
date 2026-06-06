@@ -7,9 +7,11 @@ services:
         UID: ${UID:-1000}
         GID: ${GID:-1000}
     container_name: laravel_app
-    working_dir: /var/www/html
+    working_dir: /var/www/html/application
+    user: "${UID:-1000}:${GID:-1000}"
     volumes:
       - .:/var/www/html
+      - ./docker/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
     ports:
       - "8000:8000"
       - "5173:5173"
@@ -22,6 +24,7 @@ services:
   nginx:
     image: nginx:alpine
     container_name: laravel_nginx
+    restart: unless-stopped
     ports:
       - "8082:80"
     volumes:
