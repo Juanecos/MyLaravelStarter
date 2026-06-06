@@ -9,7 +9,6 @@ use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Hash;
 
-//! no redirige el loghin ni el reghistro, tampooco lanza error
 class LoginController extends Controller
 {
     // Mostrar formulario de login

@@ -3,7 +3,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: laravel_applaravel_app
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    container_name: laravel_app
     working_dir: /var/www/html
     volumes:
       - .:/var/www/html

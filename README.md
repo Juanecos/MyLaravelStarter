@@ -19,7 +19,20 @@ Incluye ejemplos funcionales de **login**, **registro** y **dashboard protegido*
 ## Requisitos
 
 - Docker y Docker Compose
-- Visual Studio Code con extensión **Dev Containers** (ms-vscode-remote.remote-containers)
+- **Linux**: asegúrate de que tu usuario tenga Docker instalado
+- **macOS / Windows**: Docker Desktop
+
+## Compatibilidad multiplataforma
+
+El contenedor crea un usuario (`appuser`) con el mismo **UID/GID** que el usuario del host para que los archivos se puedan editar desde cualquier editor sin problemas de permisos.
+
+| Plataforma | UID típico | Notas |
+|------------|-----------|-------|
+| **Linux**  | 1000      | Coincide con el primer usuario creado |
+| **macOS**  | 501       | Si `id -u` devuelve 501, edita `.env` y pon `UID=501` |
+| **Windows**| —         | Docker Desktop traduce permisos automáticamente, funciona sin cambios |
+
+Si tienes un UID distinto, verifícalo con `id -u` y ajústalo en el archivo `.env` de la raíz del proyecto antes de construir los contenedores.
 
 ## Uso rápido
 
@@ -54,14 +67,9 @@ Servicios que se inician:
 
 ## Editar el código
 
-Los archivos dentro del contenedor pertenecen al usuario `root`, por lo que no se pueden editar directamente desde el host.  
-Para editar:
+El contenedor ejecuta los procesos como `appuser`, que tiene el mismo **UID/GID** que tu usuario local. Esto significa que los archivos que crees o modifiques desde el contenedor serán editables directamente desde el **host** con cualquier editor (VS Code, PHPStorm, Sublime, vim, etc.).
 
-1. Abre el proyecto en **VS Code**
-2. Presiona `F1` → **"Dev Containers: Reopen in Container"**
-3. Una vez dentro del contenedor puedes editar, instalar paquetes y ejecutar comandos libremente
-
-Alternativamente, puedes editar los archivos desde la terminal dentro del contenedor con `nano` o `vim`.
+No necesitas Dev Containers ni extensiones especiales.
 
 ## Comandos útiles dentro del contenedor
 
@@ -120,7 +128,19 @@ Las credenciales por defecto (definidas en `docker-compose.yml`):
 
 Puedes cambiarlas editando `docker-compose.yml` y el `.env` de la aplicación.
 
-## Variables de entorno (.env)
+## Variables de entorno
+
+### Archivo `.env` (raíz del proyecto)
+
+Define el UID/GID del usuario local (ajusta en macOS si es necesario):
+
+```
+# UID y GID de tu usuario local ( ejecuta `id -u` e `id -g` para verificarlos )
+UID=1000
+GID=1000
+```
+
+### Archivo `application/.env` (configuración de Laravel)
 
 ```
 APP_URL=http://localhost:8000
