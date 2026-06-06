@@ -119,3 +119,25 @@ Las credenciales por defecto (definidas en `docker-compose.yml`):
 | DB_PASSWORD    | secret     |
 
 Puedes cambiarlas editando `docker-compose.yml` y el `.env` de la aplicación.
+
+## Variables de entorno (.env)
+
+```
+APP_URL=http://localhost:8000
+
+DB_CONNECTION=pgsql
+DB_HOST=postgres
+DB_PORT=5432
+DB_DATABASE=laravel
+DB_USERNAME=laravel
+DB_PASSWORD=secret
+
+REDIS_CLIENT=phpredis
+REDIS_HOST=redis
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+
+CACHE_STORE=redis
+QUEUE_CONNECTION=redis
+SESSION_DRIVER=redis
+```
